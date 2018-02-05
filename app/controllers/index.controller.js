@@ -1,2 +1,6 @@
-//test index commit to git
-// edit from vscode
+exports.render = function(req, res) {
+    res.render('index', {
+        'title': 'Hello World',
+        'message': 'How are things'
+    });
+};
