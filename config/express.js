@@ -2,6 +2,10 @@ var express = require('express');
 var morgan = require('morgan');
 var compression = require('compression');
 var bodyParser = require('body-parser');
+var validator = require('express-validator');
+var cookieSession = require('cookie-session');
+var session = require('express-session');
+var config = require('./config');
 
 module.exports = function() {
     var app = express();
@@ -9,13 +13,25 @@ module.exports = function() {
         app.use(morgan('dev'));
     } else {
         app.use(compression);
-    }
+    };
+/*
+    app.use(cookieSession({
+        name: 'session',
+        keys: ['secret_key', 'secret_key2']
+    }));
+*/
+    app.use(session({
+        secret: config.sessionSecret,
+        resave: false,
+        saveUninitialized: true
+    }));
 
     app.use(bodyParser.urlencoded({
         extended: true
     }));
 
     app.use(bodyParser.json());
+    app.use(validator());
 
     app.set('views', './app/views');
     app.set('view engine', 'jade');
