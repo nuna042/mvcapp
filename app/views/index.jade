@@ -1,24 +1,16 @@
+doctype html
 html
     head
         title= title
         link(rel="stylesheet", href="/css/main.css")
     body
-        h1= title
-        if isLogedIn
-            h3 You are logged in.
-            form(action="logout", name="logout", method="post")
-                div
-                    input(type="submit", value="Logout")
+        if username
+            h2 Hello: #{username}
+            div
+                form(action="/logout", name="logout", method="post")
+                    input(type="submit", value="Log out")
         else
-            form(action="login", name="login", method="post")
-                div
-                    label(for="email") Email
-                    input(name="email", type="email", placeholder="youemail@email.com")
-                div
-                    label(for="password") Password
-                    input(type="password", name="password")
-                div
-                    input(type="checkbox", name="remember", value="remember")
-                    | Remember
-                div
-                    input(type="submit", value="Login")
+            div
+                a(href="/signup") Sign up
+            div
+                a(href="/login") Log in
