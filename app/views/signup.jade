@@ -4,6 +4,9 @@ html
         title= title
         link(rel="stylesheet", href="/css/main.css")
     body
+        each msg in messages
+            div.flash
+                = msg
         form(action="/signup", method="post", name="signup")
             div
                 label(for="username") Usename

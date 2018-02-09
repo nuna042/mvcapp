@@ -1,8 +1,31 @@
 var User = require('mongoose').model('User');
 
+var getErrorMessage = function(err) {
+    var message = '';
+
+    if(err.code) {
+        switch(err.code) {
+            case 11000:
+            case 11001:
+                message = 'Username already exists';
+                break;
+            default:
+                message = 'Someting went wrong';
+        }
+    } else {
+        for(var errName in err.errors) {
+            if(err.errors[errName].message) {
+                message = err.errors[errName].message;
+            }
+        }
+    }
+    return message;
+};
+
 exports.renderSignup = function(req, res, next) {
     res.render('signup', {
-        title: 'Sign up'
+        title: 'Sign up',
+        messages: req.flash('error')
     });
 };
 
@@ -12,8 +35,12 @@ exports.signup = function(req, res, next) {
         user.provider = 'local';
 
         user.save(function(err) {
-            console.log(err);
-            if(err) return res.redirect('/signup');
+            if(err) {
+                var message = getErrorMessage(err);
+
+                req.flash('error', message);
+                return res.redirect('/signup');
+            }
 
             req.login(user, function(err) {
                 if(err) return next(err);
