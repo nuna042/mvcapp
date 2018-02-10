@@ -1,0 +1,18 @@
+doctype html
+html
+    head
+        title= title
+        link(rel="stylesheet", href="/css/main.css")
+    body
+        each msg in messages
+            div.flash
+                = msg
+        form(action="/login", method="post", name="login")
+            div
+                label(for="username") Usename
+                input(type="text", name="username", placeholder="Username")
+            div
+                label(for="password") Password
+                input(type="password", name="password", placeholder="password")
+            div
+                input(type="submit", value="Log in")

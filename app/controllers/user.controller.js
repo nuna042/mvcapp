@@ -22,11 +22,15 @@ var getErrorMessage = function(err) {
     return message;
 };
 
-exports.renderSignup = function(req, res, next) {
-    res.render('signup', {
-        title: 'Sign up',
-        messages: req.flash('error')
-    });
+exports.renderSignup = function(req, res) {
+    if(!req.user) {
+        res.render('signup', {
+            title: 'Sign up',
+            messages: req.flash('error')
+        });
+    } else {
+        req.redirect('/');
+    }
 };
 
 exports.signup = function(req, res, next) {
@@ -51,6 +55,17 @@ exports.signup = function(req, res, next) {
 
     } else {
         res.redirect('/');
+    }
+};
+
+exports.renderLogin = function(req, res) {
+    if(!req.user) {
+        res.render('login', {
+            title: 'Log in',
+            messages: req.flash('error') || req.flash('info')
+        });
+    } else {
+        req.redirect('/');
     }
 };
 
@@ -111,30 +126,6 @@ exports.userByUsername = function(req, res, next, username) {
             req.user = user;
             next();
         }
-    });
-};
-
-exports.login = function(req, res) {
-    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.sanitizeBody('email').normalizeEmail();
-    var errors = req.validationErrors();
-    if(errors) {
-        res.render('index', {
-            title: 'There have been validation error ' + JSON.stringify(errors),
-            isLogedIn: false
-        });
-        return;
-    }
-
-    if(req.body.remember === 'remember') {
-        req.session.remember = true;
-        req.session.email = req.body.email;
-        req.session.cookie.maxAge = 60000; // milliseconds
-    }
-
-    res.render('index', {
-        title: 'Loged in as ' + req.body.email,
-        isLogedIn: true
     });
 };
 
