@@ -69,6 +69,34 @@ exports.renderLogin = function(req, res) {
     }
 };
 
+exports.saveOAuthUserProfile = function(req, profile, done) {
+    User.findOne({
+       provider: profile.provider,
+       providerId: profile.providerId
+    }, function(err, user) {
+        if(err) return done(err);
+        else {
+            if(!user) {
+                var possibleUsername = profile.username || (profile.email ? profile.email.split('@')[0] : '');
+                User.findUniqeUsername(possibleUsername, null, function(availableusername) {
+                    profile.username = availableusername;
+                    user = new User(profile);
+                    user.save(function(err) {
+                        if(err) {
+                            var message = getErrorMessage(err);
+                            req.flash('error', message);
+                            return res.redirect('/signup');
+                        }
+                        return done(err, user);
+                    });
+                });
+            } else {
+                return done(err, user);
+            }
+        }
+    });
+};
+
 exports.create = function(req, res, next) {
     var user = new User(req.body);
 
@@ -130,10 +158,6 @@ exports.userByUsername = function(req, res, next, username) {
 };
 
 exports.logout = function(req, res) {
-    req.session = null;
-
-    res.render('index', {
-        title:'See you later...',
-        isLogedIn: false
-    });
+    req.logout();
+    req.redirect('/');
 };
