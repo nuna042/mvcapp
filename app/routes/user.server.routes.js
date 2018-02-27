@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    var user = require('../controllers/user.controller');
+    var user = require('../controllers/user.server.controller');
     var passport = require('passport');
 
     app.route('/signup')

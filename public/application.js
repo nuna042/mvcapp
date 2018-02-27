@@ -1,6 +1,11 @@
-'use strict';
+var mainAppModuleName = 'Main';
+var mainAppModule = angular.module(mainAppModuleName, ['hello']);
 
-var mainAppModule = angular.module('Hello', []);
+angular.element(document).ready(function() {
+    angular.bootstrap(document.querySelector('#mainApp'), [mainAppModuleName], {
+        strictDi: true
+    });
+});
 
 mainAppModule.controller('NameController', ['$scope', function($scope) {
     $scope.yourName = 'No Name';

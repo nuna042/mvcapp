@@ -14,11 +14,10 @@ html
                 a(href="/signup") Sign up
             div
                 a(href="/login") Log in
-        div(ng-app='Hello' ng-controller='NameController')
-            div
-                label(for="yourName") Your name
-                input(type="text", name="yourName" ng-model="yourName")
-            div
-                | {{ yourName | sayhello }}
+        div#mainApp(ng-include="'/modules/hello/views/hello.client.view.jade'")
+
     script(type="text/javascript", src="/lib/angular/angular.min.js")
+    script(type="text/javascript", src="/modules/hello/hello.client.module.js")
+    script(type="text/javascript", src="/modules/hello/controllers/hello.client.controller.js")
+    script(type="text/javascript", src="/modules/hello/filters/hello.client.filter.js")
     script(type="text/javascript", src="/application.js")

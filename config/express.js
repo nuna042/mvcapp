@@ -39,11 +39,12 @@ module.exports = function() {
     app.use(bodyParser.json());
     app.use(validator());
 
-    app.set('views', './app/views');
+    app.set('views', ['./app/views', './public']);
     app.set('view engine', 'jade');
 
-    require('../app/routes/index.routes')(app);
-    require('../app/routes/user.routes')(app);
+    require('../app/routes/index.server.routes')(app);
+    require('../app/routes/user.server.routes')(app);
+    require('../app/routes/partial.server.routes')(app);
 
     app.use(express.static('./public'));
 
