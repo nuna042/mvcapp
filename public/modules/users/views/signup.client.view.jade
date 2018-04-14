@@ -1,0 +1,19 @@
+h2 Sign up
+form(name="signupForm", ng-controller="AuthController", ng-submit="signup(signupForm.$valid)", novalidate)
+    div
+        label(for="username") Usename
+        input(type="text", name="username", placeholder="Username", ng-model="user.username", ng-maxlength="10", required)
+    div
+        label(for="Firstname") Firstname
+        input(type="text", name="Firstname", placeholder="Firstname", ng-model="user.firstname", required)
+    div
+        label(for="Lastname") Lastname
+        input(type="text", name="Lastname", placeholder="Lastname", ng-model="user.lastname", required)
+    div
+        label(for="email") Email
+        input(type="email", name="email", placeholder="yourmail@mail.com", ng-model="user.email", required)
+    div
+        label(for="password") Password
+        input(type="password", name="password", placeholder="password", ng-model="user.password", ng-minlength="6", required)
+    div
+        input(type="submit", value="Sign up", ng-disabled="signupForm.$invalid")

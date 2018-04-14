@@ -1,0 +1,10 @@
+h2 Log in
+form(name="loginForm",  ng-controller="AuthController", ng-submit="login(loginForm.$valid)", novalidate)
+    div
+        label(for="username") Usename
+        input(type="text", name="username", placeholder="Username", ng-model="user.username", required)
+    div
+        label(for="password") Password
+        input(type="password", name="password", placeholder="password", ng-model="user.password", required)
+    div
+        input(type="submit", value="Log in", ng-disabled="loginForm.$invalid")
