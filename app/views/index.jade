@@ -4,23 +4,20 @@ html
         title= title
         link(rel="stylesheet", href="/css/main.css")
     body#mainApp
-        if username
-            h2 Hello: #{username}
-            div
-                form(action="/logout", name="logout", method="post")
-                    input(type="submit", value="Log out")
-        else
-            div
-                a(ui-sref="signup") Sign up
-            div
-                a(ui-sref="login") Log in
+        header(ng-include="'/modules/core/views/header.client.view.jade'")
         div(ui-view)
 
+    script(type="text/javascript").window.user = !{user || 'null'}
     script(type="text/javascript", src="/lib/angular/angular.min.js")
     script(type="text/javascript", src="/lib/angular-ui-router/release/angular-ui-router.min.js")
+
     script(type="text/javascript", src="/modules/core/core.client.module.js")
-    script(type="text/javascript", src="/modules/core/config/core.client.routes.js")    
+    script(type="text/javascript", src="/modules/core/config/core.client.routes.js")
+    script(type="text/javascript", src="/modules/core/controllers/header.client.controller.js")
+
     script(type="text/javascript", src="/modules/users/users.client.module.js")
     script(type="text/javascript", src="/modules/users/config/users.client.routes.js")
     script(type="text/javascript", src="/modules/users/controllers/auth.client.controller.js")
+    script(type="text/javascript", src="/modules/users/services/auth.client.service.js")
+
     script(type="text/javascript", src="/application.js")

@@ -12,8 +12,12 @@ form(name="signupForm", ng-controller="AuthController", ng-submit="signup(signup
     div
         label(for="email") Email
         input(type="email", name="email", placeholder="yourmail@mail.com", ng-model="user.email", required)
+        p(ng-show="signupForm.email.$touched && signupForm.email.$error.require") Email is require
+        p(ng-show="signupForm.email.$dirty && signupForm.email.$error.email") Email is in worng format
     div
         label(for="password") Password
         input(type="password", name="password", placeholder="password", ng-model="user.password", ng-minlength="6", required)
     div
         input(type="submit", value="Sign up", ng-disabled="signupForm.$invalid")
+        div(ng-show="error")
+            strong(ng-bind="error")

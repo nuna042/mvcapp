@@ -1,0 +1,12 @@
+div(ng-controller="HeaderController")
+    div(ng-if="auth.user")
+        h2 Hello
+            span(ng-bind="auth.user.username")
+        div
+            form(action="/logout", name="logout", method="post")
+                input(type="submit", value="Log out")
+    div(ng-if="!auth.user")
+        div
+            a(ui-sref="signup") Sign up
+        div
+            a(ui-sref="login") Log in

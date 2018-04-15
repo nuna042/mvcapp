@@ -8,3 +8,5 @@ form(name="loginForm",  ng-controller="AuthController", ng-submit="login(loginFo
         input(type="password", name="password", placeholder="password", ng-model="user.password", required)
     div
         input(type="submit", value="Log in", ng-disabled="loginForm.$invalid")
+        div(ng-show="error")
+            strong(ng-bind="error")
